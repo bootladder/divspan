@@ -1,0 +1,16 @@
+2110 git add .
+2112 git commit -m "init"
+2121 l
+2122 mv fucjk2.py divspan.py
+2122 mv fucjk2.py divspan.py
+2123 l
+2124 chmod +x divspan.py
+2124 chmod +x divspan.py
+2125 ./divspan.py test.fuck
+2125 ./divspan.py test.fuck
+2126 ./divspan.py
+2127 ./divspan.py -h
+2128 ./divspan.py test.fuck -p fuuuuck
+2128 ./divspan.py test.fuck -p fuuuuck
+2128 ./divspan.py test.fuck -p fuuuuck
+2129 l

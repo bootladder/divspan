@@ -1,6 +1,8 @@
+#!/usr/bin/python
 from html.parser import HTMLParser
 import re
 import sys
+import argparse
 
 class HTMLFormatter(HTMLParser):
     def __init__(self):
@@ -66,13 +68,29 @@ def convert_to_html(input_text, prefix="prefix"):
     return '\n'.join(html_output)
 
 
-filepath = sys.argv[1]
-with open(filepath, 'r') as f:
-    input_text = f.read()
 
+def main():
+    parser = argparse.ArgumentParser(description="Convert custom syntax to HTML.")
+    parser.add_argument("filepath", help="Path to the input file containing custom syntax text.")
+    parser.add_argument("-p", "--prefix", default="prefix", help="Prefix for auto-generated class names. Default is 'prefix'.")
+    parser.add_argument("-o", "--output", help="Path to save the generated HTML. If not specified, the HTML is printed to console.")
 
+    args = parser.parse_args()
 
-result = convert_to_html(input_text)
-parser = HTMLFormatter()
-parser.feed(result)
-print(parser.get_formatted_html())
+    with open(args.filepath, 'r') as f:
+        input_text = f.read()
+
+    result = convert_to_html(input_text, args.prefix)
+    formatter = HTMLFormatter()
+    formatter.feed(result)
+
+    output_html = formatter.get_formatted_html()
+
+    if args.output:
+        with open(args.output, 'w') as f:
+            f.write(output_html)
+    else:
+        print(output_html)
+
+if __name__ == "__main__":
+    main()
