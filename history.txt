@@ -14,3 +14,18 @@
 2128 ./divspan.py test.fuck -p fuuuuck
 2128 ./divspan.py test.fuck -p fuuuuck
 2129 l
+2130 git add .
+2132 gc "yeah:"
+2134 ebrcterm
+2135 sbrc
+2136 divspan.py test.fuck
+1998 ~/.screenlayout/1080p-hdmi-left-laptop-right.sh
+2137 ebrcterm
+2139 sbrc
+2142 cd -
+2143 l
+2047 sbrc
+2144 vi divspan.py
+1998 ~/.screenlayout/1080p-hdmi-left-laptop-right.sh
+2157 gd
+2159 vi .gitignore

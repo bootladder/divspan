@@ -46,7 +46,7 @@ def convert_to_html(input_text, prefix="prefix"):
             div_class = div_class_hint[1].split()[0]  # Get only the class name
             fragments[0] = fragments[0].replace("#" + div_class, "").strip()
         else:
-            div_class = f"{prefix}_{div_count}"
+            div_class = f"{prefix} div_{div_count}"
 
         for index, fragment in enumerate(fragments):
             # Check for a custom class in the span definition
@@ -56,17 +56,16 @@ def convert_to_html(input_text, prefix="prefix"):
                 fragment = fragment.replace("#" + span_class, "").strip()
             else:
                 span_count += 1
-                span_class = f"{prefix}_{span_count}"
+                span_class = f"{prefix} span_{span_count}"
 
             if 0 < index < len(fragments) - 1:  # Only wrap middle fragments in spans
-                div_content.append(f'<span class="{span_class}">{fragment}</span>')
+                div_content.append(f'<span class="{prefix} {span_class}">{fragment}</span>')
             else:
                 div_content.append(fragment)
 
-        html_output.append(f'<div class="{div_class}">{" ".join(div_content)}</div>')
+        html_output.append(f'<div class="{prefix} {div_class}">{" ".join(div_content)}</div>')
 
     return '\n'.join(html_output)
-
 
 
 def main():
