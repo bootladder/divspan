@@ -56,12 +56,17 @@ def convert_to_html(input_text, prefix="prefix"):
                 span_content = span_class_hint[1].replace(custom_span_class, "").strip()
                 div_content.append(f'<span class="{prefix} index_{span_count} {custom_span_class}">{span_content}</span>')
             else:
-                div_content.append(fragment)
+                # If it's not the first or the last fragment, then it is a span
+                if 0 < index < len(fragments) - 1:  
+                    span_count += 1
+                    div_content.append(f'<span class="{prefix} index_{span_count}">{fragment}</span>')
+                else:
+                    div_content.append(fragment)
 
         div_class = f"{prefix} index_{div_count} {custom_div_class}"
         html_output.append(f'<div class="{div_class}">{" ".join(div_content)}</div>')
 
-    return '\n'.join(html_output)
+    return f'<div class="{prefix} divspancontainer">' + '\n'.join(html_output) + '</div>'
 
 
 def main():
