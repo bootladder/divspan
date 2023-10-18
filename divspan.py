@@ -47,22 +47,14 @@ def convert_to_html(input_text, prefix="prefix"):
         else:
             custom_div_class = ""
 
-        # Reset span count for each new div
         span_count = 0
         for index, fragment in enumerate(fragments):
-            # Check for a custom class in the span definition
             span_class_hint = fragment.split("#")
-            if len(span_class_hint) > 1:
-                custom_span_class = span_class_hint[1].split()[0]  # Get only the class name
-                fragment = fragment.replace("#" + custom_span_class, "").strip()
-            else:
-                custom_span_class = ""
-
-            # Determine if fragment should be wrapped in a span
-            if len(fragments) > 2 and index != 0 and index != len(fragments) - 1:
+            if len(span_class_hint) > 1:  # Check for a custom class in the span definition
                 span_count += 1
-                span_class = f"{prefix} index_{span_count} {custom_span_class}"
-                div_content.append(f'<span class="{span_class}">{fragment}</span>')
+                custom_span_class = span_class_hint[1].split()[0]  # Get only the class name
+                span_content = span_class_hint[1].replace(custom_span_class, "").strip()
+                div_content.append(f'<span class="{prefix} index_{span_count} {custom_span_class}">{span_content}</span>')
             else:
                 div_content.append(fragment)
 
@@ -70,8 +62,6 @@ def convert_to_html(input_text, prefix="prefix"):
         html_output.append(f'<div class="{div_class}">{" ".join(div_content)}</div>')
 
     return '\n'.join(html_output)
-
-
 
 
 def main():
