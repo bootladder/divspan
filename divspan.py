@@ -33,7 +33,6 @@ def convert_to_html(input_text, prefix="prefix"):
     lines = input_text.strip().split("\n\n")  # Divided by double newlines
     html_output = []
     div_count = 0
-    span_count = 0
 
     for line in lines:
         div_count += 1
@@ -43,29 +42,36 @@ def convert_to_html(input_text, prefix="prefix"):
         # Check for a custom class in the div definition
         div_class_hint = fragments[0].split("#")
         if len(div_class_hint) > 1:
-            div_class = div_class_hint[1].split()[0]  # Get only the class name
-            fragments[0] = fragments[0].replace("#" + div_class, "").strip()
+            custom_div_class = div_class_hint[1].split()[0]  # Get only the class name
+            fragments[0] = fragments[0].replace("#" + custom_div_class, "").strip()
         else:
-            div_class = f"{prefix} div_{div_count}"
+            custom_div_class = ""
 
+        # Reset span count for each new div
+        span_count = 0
         for index, fragment in enumerate(fragments):
             # Check for a custom class in the span definition
             span_class_hint = fragment.split("#")
             if len(span_class_hint) > 1:
-                span_class = span_class_hint[1].split()[0]  # Get only the class name
-                fragment = fragment.replace("#" + span_class, "").strip()
+                custom_span_class = span_class_hint[1].split()[0]  # Get only the class name
+                fragment = fragment.replace("#" + custom_span_class, "").strip()
             else:
-                span_count += 1
-                span_class = f"{prefix} span_{span_count}"
+                custom_span_class = ""
 
-            if 0 < index < len(fragments) - 1:  # Only wrap middle fragments in spans
-                div_content.append(f'<span class="{prefix} {span_class}">{fragment}</span>')
+            # Determine if fragment should be wrapped in a span
+            if len(fragments) > 2 and index != 0 and index != len(fragments) - 1:
+                span_count += 1
+                span_class = f"{prefix} index_{span_count} {custom_span_class}"
+                div_content.append(f'<span class="{span_class}">{fragment}</span>')
             else:
                 div_content.append(fragment)
 
-        html_output.append(f'<div class="{prefix} {div_class}">{" ".join(div_content)}</div>')
+        div_class = f"{prefix} index_{div_count} {custom_div_class}"
+        html_output.append(f'<div class="{div_class}">{" ".join(div_content)}</div>')
 
     return '\n'.join(html_output)
+
+
 
 
 def main():

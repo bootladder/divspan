@@ -29,3 +29,11 @@
 1998 ~/.screenlayout/1080p-hdmi-left-laptop-right.sh
 2157 gd
 2159 vi .gitignore
+2161 git add .
+2163 git commit -m "class naming"
+2164 vi divspan.py
+2165 divspan.py test.fuck
+2166 vi divspan.py
+2167 divspan.py test.fuck
+2004 gd
+2006 gd
